@@ -47,8 +47,12 @@ building_ancient_control_center = {
 
 	resources = {
 		category = planet_buildings
-		cost = {
-			minerals = @b2_minerals
+		inline_script = {
+			script = buildings/nomadic_cost_switcher
+			REGULAR_RESOURCE = minerals
+			NOMADIC_RESOURCE = alloys
+			COST = @b2_minerals
+			NOMADIC_COST_MULT = @nomadic_minerals_to_strategic_ratio
 		}
 		upkeep = {
 			energy = 10
@@ -110,8 +114,12 @@ building_ancient_hive_capital = {
 
 	resources = {
 		category = planet_buildings
-		cost = {
-			minerals = @b2_minerals
+		inline_script = {
+			script = buildings/nomadic_cost_switcher
+			REGULAR_RESOURCE = minerals
+			NOMADIC_RESOURCE = alloys
+			COST = @b2_minerals
+			NOMADIC_COST_MULT = @nomadic_minerals_to_strategic_ratio
 		}
 		upkeep = {
 			energy = 10
@@ -183,8 +191,12 @@ building_ancient_palace = {
 
 	resources = {
 		category = planet_buildings
-		cost = {
-			minerals = @b2_minerals
+		inline_script = {
+			script = buildings/nomadic_cost_switcher
+			REGULAR_RESOURCE = minerals
+			NOMADIC_RESOURCE = alloys
+			COST = @b2_minerals
+			NOMADIC_COST_MULT = @nomadic_minerals_to_strategic_ratio
 		}
 		upkeep = {
 			energy = 10
@@ -232,8 +244,12 @@ building_fe_xeno_zoo = {
 
 	resources = {
 		category = planet_buildings
-		cost = {
-			minerals = @b3_minerals
+		inline_script = {
+			script = buildings/nomadic_cost_switcher
+			REGULAR_RESOURCE = minerals
+			NOMADIC_RESOURCE = alloys
+			COST = @b3_minerals
+			NOMADIC_COST_MULT = @nomadic_minerals_to_strategic_ratio
 		}
 		upkeep = {
 			energy = 10
@@ -276,8 +292,12 @@ building_hab_fe_capital = {
 
 	resources = {
 		category = planet_buildings
-		cost = {
-			minerals = @b2_minerals
+		inline_script = {
+			script = buildings/nomadic_cost_switcher
+			REGULAR_RESOURCE = minerals
+			NOMADIC_RESOURCE = alloys
+			COST = @b2_minerals
+			NOMADIC_COST_MULT = @nomadic_minerals_to_strategic_ratio
 		}
 		upkeep = {
 			energy = 5
@@ -1949,6 +1969,7 @@ building_fe_sky_dome = {
 	building_sets = {
 		fallen_empire
 		bio_trophy
+		ark_forever_cruise_passengers
 		urban
 		resort
 	}
@@ -1982,7 +2003,9 @@ building_fe_sky_dome = {
 	}
 
 	destroy_trigger = {
-		always = no
+		owner? = {
+			has_country_flag = forever_cruise_over
+		}
 	}
 
 	planet_modifier = {
@@ -1994,9 +2017,20 @@ building_fe_sky_dome = {
 		potential = {
 			owner = {
 				has_valid_civic = civic_machine_servitor
+				is_hospitality_servitor_empire = no
 			}
 		}
 		job_bio_trophy_add = 3750
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				has_origin = origin_forever_cruise
+				NOT = { has_country_flag = forever_cruise_over }
+			}
+		}
+		job_cruise_passenger_add = 2500
 	}
 
 	resources = {
@@ -2084,6 +2118,7 @@ building_fe_dome = {
 	building_sets = {
 		fallen_empire
 		bio_trophy
+		ark_forever_cruise_passengers
 		urban
 		resort
 	}
@@ -2118,7 +2153,9 @@ building_fe_dome = {
 	}
 
 	destroy_trigger = {
-		always = no
+		owner? = {
+			has_country_flag = forever_cruise_over
+		}
 	}
 
 	planet_modifier = {
@@ -2132,9 +2169,20 @@ building_fe_dome = {
 			exists = owner
 			owner = {
 				has_valid_civic = civic_machine_servitor
+				is_hospitality_servitor_empire = no
 			}
 		}
 		job_bio_trophy_add = 7500
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			owner? = {
+				has_origin = origin_forever_cruise
+				NOT = { has_country_flag = forever_cruise_over }
+			}
+		}
+		job_cruise_passenger_add = 5000
 	}
 
 	resources = {
@@ -3756,19 +3804,12 @@ building_fe_assembly_1 = {
 	potential = {
 		exists = owner
 		OR = {
-			AND = {
+			owner = {
+				is_regular_empire = yes
+				NOT = { has_policy_flag = robots_outlawed }
 				OR = {
-					owner = { is_ai = no }
-					NOT = { exists = assembling_species }
-					assembling_species = { is_robotic_species = yes }
-				}
-				owner = {
-					is_regular_empire = yes
-					NOT = { has_policy_flag = robots_outlawed }
-					OR = {
-						NOT = { has_ascension_perk = ap_engineered_evolution }
-						is_materialist = yes
-					}
+					NOT = { has_ascension_perk = ap_engineered_evolution }
+					is_materialist = yes
 				}
 			}
 			owner = {
@@ -3981,20 +4022,13 @@ building_fe_assembly_2 = {
 	potential = {
 		exists = owner
 		OR = {
-			AND = {
+			owner = {
+				is_regular_empire = yes
+				NOT = { has_policy_flag = robots_outlawed }
 				OR = {
-					owner = { is_ai = no }
-					NOT = { exists = assembling_species }
-					assembling_species = { is_robotic_species = yes }
-				}
-				owner = {
-					is_regular_empire = yes
-					NOT = { has_policy_flag = robots_outlawed }
-					OR = {
-						is_ai = no
-						NOT = { has_ascension_perk = ap_engineered_evolution }
-						is_materialist = yes
-					}
+					is_ai = no
+					NOT = { has_ascension_perk = ap_engineered_evolution }
+					is_materialist = yes
 				}
 			}
 			owner = {
