@@ -2027,7 +2027,10 @@ building_fe_sky_dome = {
 		potential = {
 			owner? = {
 				has_origin = origin_forever_cruise
-				NOT = { has_country_flag = forever_cruise_over }
+				NOR = {
+					has_country_flag = forever_cruise_over
+					has_country_flag = suspended_passenger_services
+				}
 			}
 		}
 		job_cruise_passenger_add = 2500
@@ -2179,7 +2182,10 @@ building_fe_dome = {
 		potential = {
 			owner? = {
 				has_origin = origin_forever_cruise
-				NOT = { has_country_flag = forever_cruise_over }
+				NOR = {
+					has_country_flag = forever_cruise_over
+					has_country_flag = suspended_passenger_services
+				}
 			}
 		}
 		job_cruise_passenger_add = 5000
@@ -5374,6 +5380,15 @@ building_fe_silo_1 = {
 		country_resource_max_minor_artifacts_add = 500
 	}
 
+	triggered_country_modifier = {
+		potential = {
+			owner? = {
+				is_nomadic = yes
+			}
+		}
+		situation_nomad_economy_max_progress_add = 2500
+	}
+
 	upgrades = {
 		building_fe_silo_2
 	}
@@ -5499,6 +5514,15 @@ building_fe_silo_2 = {
 	country_modifier = {
 		country_resource_max_add = 100000
 		country_resource_max_minor_artifacts_add = 1000
+	}
+
+	triggered_country_modifier = {
+		potential = {
+			owner? = {
+				is_nomadic = yes
+			}
+		}
+		situation_nomad_economy_max_progress_add = 5000
 	}
 
 	on_queued = {
